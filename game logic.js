@@ -52,7 +52,8 @@ function display(){
         w: 60,
         h: 60,
         speed: 20,
-        moving: "false"
+        moving: "false",
+        forward:"true"
     };
 
     firstAid = {
@@ -74,17 +75,27 @@ function display(){
     gameOver="false";
     score= 0;
 
-    document.addEventListener('mousedown',function(){
-      player.moving= true;
-    })
+    //document.addEventListener('mousedown',function(){
+      //player.moving= true;
+    //})
 
-    document.addEventListener('mouseup',function(){
-        player.moving= false;
-    })
+    //document.addEventListener('mouseup',function(){
+      //  player.moving= false;
+    //})
 
     canvas=document.getElementById("canvas");
     
+    button1=document.getElementById("button1");
+    button1.addEventListener('click',function(){
+        player.moving= true;
+        player.forward=true;
+    })
     
+    button2=document.getElementById("button2");
+    button2.addEventListener('click',function(){
+        player.moving= true;
+        player.forward=false;
+    })
     
     
     
@@ -134,11 +145,19 @@ function isColliding(b1,b2){
 
 function update(){
 
-    if(player.moving==true){
+    if(player.moving==true && player.forward==true){
         player.x+=player.speed;
+        player.moving=false;
        
         score+=20;
     }
+    
+    if(player.moving==true && player.forward==false){
+        player.x-=player.speed;
+       player.moving=false;
+        
+    }
+    
     if(isColliding(home,player)){
         gameOver=true;
         alert("You won and your score is "+ score);
